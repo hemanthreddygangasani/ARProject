@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Model Fixer + Petal Shower</title>
+    <title>Model Fixer</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <script>
-        AFRAME.registerComponent('scene-debugger', {
+        AFRAME.registerComponent('model-debugger', {
             init: function () {
                 const log = document.getElementById('debug-text');
-                this.el.addEventListener('markerFound', () => {
-                    log.innerHTML = "✅ AR Scene Loaded!<br>Starting Petal Shower.";
+                
+                // If the model successfully downloads and renders
+                this.el.addEventListener('model-loaded', () => {
+                    log.innerHTML = "✅ Model Loaded! (If invisible, change scale)";
                     log.style.color = "green";
+                });
+                
+                // If the file is broken, compressed, or missing
+                this.el.addEventListener('model-error', (error) => {
+                    log.innerHTML = "❌ Model Error: File broken, missing, or uses Draco compression.";
+                    log.style.color = "red";
                 });
             }
         });
@@ -20,73 +28,60 @@
 
 <body style="margin: 0; overflow: hidden;">
     
-    <div style="position: fixed; top: 10px; left: 10px; z-index: 9999; background: white; padding: 15px; border: 2px solid black; font-family: sans-serif; font-weight: bold; font-size: 12px;">
+    <div style="position: fixed; top: 10px; left: 10px; z-index: 9999; background: white; padding: 15px; border: 2px solid black; font-family: sans-serif; font-weight: bold;">
         <span id="debug-text" style="color: orange;">Scanning pattern...</span>
     </div>
 
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" renderer="colorManagement: true;">
         
         <a-assets>
-            <a-asset-item id="couple-model" src="the_groom_and_bride.glb"></a-asset-item>
-            <a-asset-item id="gate-model" src="wedding_gate.glb"></a-asset-item>
-            
-            <img id="petal-texture" src="—Pngtree—red rose petals aesthetic romantic_20375883.jpg">
+            <a-asset-item id="my-model" src="model.glb"></a-asset-item>
+            <img id="petal" src="—Pngtree—red rose petals aesthetic romantic_20375883.jpg">
         </a-assets>
 
-        <a-marker type="pattern" url="pattern-marker.patt" scene-debugger>
+        <a-marker type="pattern" url="pattern-marker.patt">
             
-            <a-light type="ambient" color="#FFF" intensity="1.8"></a-light>
-            <a-light type="directional" position="1 2 1" intensity="0.5"></a-light>
+            <a-light type="ambient" color="#FFF" intensity="2.0"></a-light>
             
             <a-entity
-                gltf-model="#gate-model"
+                gltf-model="#my-model"
                 position="0 0 0"
-                scale="0.8 0.8 0.8" 
-                rotation="-90 0 0">
+                scale="4.5 4.5 4.5" 
+                rotation="-90 0 0"
+                model-debugger>
             </a-entity>
 
-            <a-entity
-                gltf-model="#couple-model"
-                position="0 0.1 0.2"
-                scale="1.2 1.2 1.2" 
-                rotation="-90 0 0">
-            </a-entity>
-
-            <a-entity id="petal-shower">
+            <a-entity id="shower">
                 
-                <a-plane class="petal"
-                         material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;"
-                         geometry="primitive: plane; width: 0.15; height: 0.15;"
-                         position="-0.5 4 0.2"
-                         animation__fall="property: position; from: -0.5 4 0.2; to: -0.5 -1 0.2; dur: 5000; easing: linear; loop: true; delay: 0;"
-                         animation__spin="property: rotation; from: 0 0 0; to: 360 720 360; dur: 5000; easing: linear; loop: true;">
+                <a-plane material="src: #petal; transparent: true; alphaTest: 0.5; side: double;"
+                         geometry="primitive: plane; width: 0.2; height: 0.2;"
+                         position="-1 4 0"
+                         animation__fall="property: position; from: -1 4 0; to: -1 -1 0; dur: 4000; easing: linear; loop: true;"
+                         animation__spin="property: rotation; from: 0 0 0; to: 360 720 360; dur: 4000; easing: linear; loop: true;">
                 </a-plane>
 
-                <a-plane class="petal"
-                         material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;"
-                         geometry="primitive: plane; width: 0.15; height: 0.15;"
-                         position="0.8 4 -0.3"
-                         animation__fall="property: position; from: 0.8 4 -0.3; to: 0.8 -1 -0.3; dur: 3500; easing: linear; loop: true; delay: 1500;"
-                         animation__spin="property: rotation; from: 0 0 0; to: 720 360 720; dur: 3500; easing: linear; loop: true;">
+                <a-plane material="src: #petal; transparent: true; alphaTest: 0.5; side: double;"
+                         geometry="primitive: plane; width: 0.2; height: 0.2;"
+                         position="0.8 5 -0.5"
+                         animation__fall="property: position; from: 0.8 5 -0.5; to: 0.8 -1 -0.5; dur: 5500; easing: linear; loop: true; delay: 1200;"
+                         animation__spin="property: rotation; from: 0 0 0; to: 720 360 720; dur: 5500; easing: linear; loop: true;">
                 </a-plane>
 
-                <a-plane class="petal"
-                         material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;"
+                <a-plane material="src: #petal; transparent: true; alphaTest: 0.5; side: double;"
                          geometry="primitive: plane; width: 0.15; height: 0.15;"
-                         position="0 4 0.8"
-                         animation__fall="property: position; from: 0 4 0.8; to: 0.2 -1 0.8; dur: 7000; easing: linear; loop: true; delay: 500;"
-                         animation__spin="property: rotation; from: 0 0 0; to: 360 360 360; dur: 7000; easing: linear; loop: true;">
+                         position="0.2 4.5 0.8"
+                         animation__fall="property: position; from: 0.2 4.5 0.8; to: 0.2 -1 0.8; dur: 6000; easing: linear; loop: true; delay: 500;"
+                         animation__spin="property: rotation; from: 0 0 0; to: 360 360 720; dur: 6000; easing: linear; loop: true;">
                 </a-plane>
 
-                <a-plane class="petal"
-                         material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;"
-                         geometry="primitive: plane; width: 0.15; height: 0.15;"
-                         position="1 4 0"
-                         animation__fall="property: position; from: 1 4 0; to: 1 -1 0; dur: 4500; easing: linear; loop: true; delay: 2500;"
-                         animation__spin="property: rotation; from: 0 0 0; to: 1080 360 1080; dur: 4500; easing: linear; loop: true;">
+                <a-plane material="src: #petal; transparent: true; alphaTest: 0.5; side: double;"
+                         geometry="primitive: plane; width: 0.25; height: 0.25;"
+                         position="-0.6 5.5 0.6"
+                         animation__fall="property: position; from: -0.6 5.5 0.6; to: -0.6 -1 0.6; dur: 3500; easing: linear; loop: true; delay: 2000;"
+                         animation__spin="property: rotation; from: 0 0 0; to: 1080 360 360; dur: 3500; easing: linear; loop: true;">
                 </a-plane>
 
-                </a-entity>
+            </a-entity>
 
         </a-marker>
 
