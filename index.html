@@ -1,35 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Advanced AR Diagnostic</title>
+    <title>Model Fixer</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <script>
-        // 1. Checks if the camera sees the pattern
-        AFRAME.registerComponent('marker-tracker', {
+        AFRAME.registerComponent('model-debugger', {
             init: function () {
                 const log = document.getElementById('debug-text');
-                this.el.addEventListener('markerFound', () => {
-                    log.innerHTML = "✅ Pattern Found!<br>";
+                
+                // If the model successfully downloads and renders
+                this.el.addEventListener('model-loaded', () => {
+                    log.innerHTML = "✅ Model Loaded! (If invisible, change scale)";
                     log.style.color = "green";
                 });
-                this.el.addEventListener('markerLost', () => {
-                    log.innerHTML = "❌ Pattern Lost. Scan again.";
+                
+                // If the file is broken, compressed, or missing
+                this.el.addEventListener('model-error', (error) => {
+                    log.innerHTML = "❌ Model Error: File broken, missing, or uses Draco compression.";
                     log.style.color = "red";
-                });
-            }
-        });
-
-        // 2. Checks if the 3D model file is actually loading
-        AFRAME.registerComponent('model-tracker', {
-            init: function () {
-                const log = document.getElementById('debug-text');
-                this.el.addEventListener('model-loaded', () => {
-                    log.innerHTML += "✅ 3D Model Loaded Successfully!";
-                });
-                this.el.addEventListener('model-error', (err) => {
-                    log.innerHTML += "❌ Model Error: Check if model.glb is in the folder and spelled correctly.";
                 });
             }
         });
@@ -37,29 +27,32 @@
 </head>
 
 <body style="margin: 0; overflow: hidden;">
-
-    <div style="position: fixed; top: 10px; left: 10px; z-index: 9999; background: white; padding: 15px; border: 2px solid black; font-family: sans-serif; font-weight: bold; font-size: 14px; min-width: 250px;">
-        <span id="debug-text" style="color: orange;">Waiting for camera...</span>
+    
+    <div style="position: fixed; top: 10px; left: 10px; z-index: 9999; background: white; padding: 15px; border: 2px solid black; font-family: sans-serif; font-weight: bold;">
+        <span id="debug-text" style="color: orange;">Scanning pattern...</span>
     </div>
 
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" renderer="colorManagement: true;">
+        
+        <a-assets>
+            <a-asset-item id="my-model" src="model.glb"></a-asset-item>
+        </a-assets>
 
-        <a-marker type="pattern" url="pattern-marker.patt" marker-tracker>
+        <a-marker type="pattern" url="pattern-marker.patt">
             
-            <a-light type="ambient" color="#FFF" intensity="1.5"></a-light>
+            <a-light type="ambient" color="#FFF" intensity="2.0"></a-light>
             
-            <a-entity 
-                gltf-model="model.glb" 
-                position="0 0.1 0" 
-                scale="0.5 0.5 0.5" 
+            <a-entity
+                gltf-model="#my-model"
+                position="0 0 0"
+                scale="5 5 5" 
                 rotation="-90 0 0"
-                model-tracker>
+                model-debugger>
             </a-entity>
 
         </a-marker>
 
         <a-entity camera></a-entity>
     </a-scene>
-
 </body>
 </html>
