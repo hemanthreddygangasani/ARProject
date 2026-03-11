@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Optimized AR Model Test</title>
-    
+    <title>Custom Pattern AR Test</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <script>
-        AFRAME.registerComponent('model-checker', {
+        // On-Screen Debugger for the iPad
+        AFRAME.registerComponent('debug-logger', {
             init: function () {
-                this.el.addEventListener('model-loaded', () => {
-                    console.log('✅ SUCCESS: 3D Model loaded perfectly!');
+                const log = document.getElementById('debug-text');
+                
+                this.el.sceneEl.addEventListener('markerFound', () => {
+                    log.innerHTML = "✅ CUSTOM MARKER FOUND!";
+                    log.style.color = "green";
                 });
-                this.el.addEventListener('model-error', (error) => {
-                    console.error('❌ ERROR: Model failed to load. Check file name and size.', error);
+
+                this.el.sceneEl.addEventListener('markerLost', () => {
+                    log.innerHTML = "❌ MARKER LOST. Keep camera steady.";
+                    log.style.color = "red";
                 });
             }
         });
@@ -22,31 +27,25 @@
 
 <body style="margin: 0; overflow: hidden;">
 
-    <a-scene 
-        embedded 
-        arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
-        renderer="colorManagement: true;">
+    <div style="position: fixed; top: 10px; left: 10px; z-index: 9999; background: white; padding: 15px; border: 2px solid black; font-family: sans-serif; font-weight: bold;">
+        Status: <span id="debug-text" style="color: orange;">Waiting for camera...</span>
+    </div>
+
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;" renderer="colorManagement: true;" debug-logger>
 
         <a-assets>
             <a-asset-item id="wedding-model" src="model.glb"></a-asset-item>
         </a-assets>
 
-        <a-marker preset="hiro">
+        <a-marker type="pattern" url="pattern-marker.patt">
             
             <a-light type="ambient" color="#FFF" intensity="1.5"></a-light>
             
-            <a-entity 
-                gltf-model="#wedding-model" 
-                position="0 0.1 0" 
-                scale="0.5 0.5 0.5" 
-                rotation="-90 0 0"
-                model-checker>
-            </a-entity>
+            <a-box position="0 0.5 0" scale="1 1 1" material="color: red; opacity: 0.8;"></a-box>
 
         </a-marker>
 
         <a-entity camera></a-entity>
-
     </a-scene>
 
 </body>
