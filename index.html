@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Premium AR Wedding Stage</title>
+    <title>Model Fixer</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <script>
-        // Keeping the debugger so we know if the heavy files load!
-        AFRAME.registerComponent('scene-debugger', {
+        AFRAME.registerComponent('model-debugger', {
             init: function () {
                 const log = document.getElementById('debug-text');
-                this.el.addEventListener('markerFound', () => {
-                    log.innerHTML = "✅ Pattern Found! Loading 3D assets...";
+                
+                // If the model successfully downloads and renders
+                this.el.addEventListener('model-loaded', () => {
+                    log.innerHTML = "✅ Model Loaded! (If invisible, change scale)";
                     log.style.color = "green";
+                });
+                
+                // If the file is broken, compressed, or missing
+                this.el.addEventListener('model-error', (error) => {
+                    log.innerHTML = "❌ Model Error: File broken, missing, or uses Draco compression.";
+                    log.style.color = "red";
                 });
             }
         });
@@ -28,27 +35,19 @@
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" renderer="colorManagement: true;">
         
         <a-assets>
-            <a-asset-item id="couple-model" src="model.glb"></a-asset-item>
-            <a-asset-item id="stage-model" src="stage.glb"></a-asset-item>
+            <a-asset-item id="my-model" src="model.glb"></a-asset-item>
         </a-assets>
 
-        <a-marker type="pattern" url="pattern-marker.patt" scene-debugger>
+        <a-marker type="pattern" url="pattern-marker.patt">
             
-            <a-light type="ambient" color="#FFF" intensity="1.8"></a-light>
-            <a-light type="directional" color="#FFF" intensity="0.5" position="-1 2 1"></a-light>
+            <a-light type="ambient" color="#FFF" intensity="2.0"></a-light>
             
             <a-entity
-                gltf-model="#stage-model"
+                gltf-model="#my-model"
                 position="0 0 0"
-                scale="1 1 1" 
-                rotation="-90 0 0">
-            </a-entity>
-
-            <a-entity
-                gltf-model="#couple-model"
-                position="0 0.1 0.5"
                 scale="5 5 5" 
-                rotation="-90 0 0">
+                rotation="-90 0 0"
+                model-debugger>
             </a-entity>
 
         </a-marker>
