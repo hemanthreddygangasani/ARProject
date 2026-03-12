@@ -50,36 +50,23 @@
                 model-debugger>
             </a-entity>
 
-            <a-plane
-                material="src: #board-texture; transparent: true; side: double;"
-                geometry="primitive: plane; width: 2.2; height: 3.0;"
-                position="1.5 0 -0.5"
-                rotation="0 -20 0">
-            </a-plane>
+            <a-text 
+                value="Arjun & Lavanya" 
+                position="3.5 0 0" 
+                rotation="-90 0 0" 
+                color="#FFD700" 
+                align="center" 
+                scale="1.5 1.5 1.5">
+            </a-text>
 
-            <a-entity id="shower">
-                
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="-1 4 0.5" animation__fall="property: position; from: -1 4 0.5; to: -1 -1.5 0.5; dur: 4000; easing: linear; loop: true; delay: 0;" animation__spin="property: rotation; from: 0 0 0; to: 360 720 360; dur: 4000; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="1.2 4 0.8" animation__fall="property: position; from: 1.2 4 0.8; to: 1.2 -1.5 0.8; dur: 3500; easing: linear; loop: true; delay: 500;" animation__spin="property: rotation; from: 0 0 0; to: 720 360 720; dur: 3500; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="0 4 1.2" animation__fall="property: position; from: 0 4 1.2; to: 0 -1.5 1.2; dur: 4500; easing: linear; loop: true; delay: 200;" animation__spin="property: rotation; from: 0 0 0; to: 1080 360 1080; dur: 4500; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="-0.5 4 -0.2" animation__fall="property: position; from: -0.5 4 -0.2; to: -0.5 -1.5 -0.2; dur: 3800; easing: linear; loop: true; delay: 1000;" animation__spin="property: rotation; from: 0 0 0; to: 360 360 360; dur: 3800; easing: linear; loop: true;"></a-plane>
-
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.08; height: 0.08;" position="0.5 4 0" animation__fall="property: position; from: 0.5 4 0; to: 0.5 -1.5 0; dur: 6000; easing: linear; loop: true; delay: 1500;" animation__spin="property: rotation; from: 0 0 0; to: 360 360 720; dur: 6000; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="-1.2 4 1" animation__fall="property: position; from: -1.2 4 1; to: -1.2 -1.5 1; dur: 5500; easing: linear; loop: true; delay: 800;" animation__spin="property: rotation; from: 0 0 0; to: 720 720 360; dur: 5500; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="0.8 4 -0.8" animation__fall="property: position; from: 0.8 4 -0.8; to: 0.8 -1.5 -0.8; dur: 6500; easing: linear; loop: true; delay: 2500;" animation__spin="property: rotation; from: 0 0 0; to: 360 1080 1080; dur: 6500; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.09; height: 0.09;" position="-0.2 4 -0.5" animation__fall="property: position; from: -0.2 4 -0.5; to: -0.2 -1.5 -0.5; dur: 5800; easing: linear; loop: true; delay: 1800;" animation__spin="property: rotation; from: 0 0 0; to: 1080 360 720; dur: 5800; easing: linear; loop: true;"></a-plane>
-
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="1.8 4 0.3" animation__fall="property: position; from: 1.8 4 0.3; to: 1.8 -1.5 0.3; dur: 4800; easing: linear; loop: true; delay: 3000;" animation__spin="property: rotation; from: 0 0 0; to: 720 360 1080; dur: 4800; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.08; height: 0.08;" position="1 4 -0.6" animation__fall="property: position; from: 1 4 -0.6; to: 1 -1.5 -0.6; dur: 5200; easing: linear; loop: true; delay: 3500;" animation__spin="property: rotation; from: 0 0 0; to: 360 720 1080; dur: 5200; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.11; height: 0.11;" position="2 4 -1.2" animation__fall="property: position; from: 2 4 -1.2; to: 2 -1.5 -1.2; dur: 4200; easing: linear; loop: true; delay: 4000;" animation__spin="property: rotation; from: 0 0 0; to: 1080 1080 360; dur: 4200; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="0.3 4 -1.5" animation__fall="property: position; from: 0.3 4 -1.5; to: 0.3 -1.5 -1.5; dur: 4600; easing: linear; loop: true; delay: 4500;" animation__spin="property: rotation; from: 0 0 0; to: 360 360 1080; dur: 4600; easing: linear; loop: true;"></a-plane>
-
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="-1.5 4 -0.8" animation__fall="property: position; from: -1.5 4 -0.8; to: -1.5 -1.5 -0.8; dur: 5100; easing: linear; loop: true; delay: 5000;" animation__spin="property: rotation; from: 0 0 0; to: 720 1080 360; dur: 5100; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="0.7 4 1.5" animation__fall="property: position; from: 0.7 4 1.5; to: 0.7 -1.5 1.5; dur: 4900; easing: linear; loop: true; delay: 5500;" animation__spin="property: rotation; from: 0 0 0; to: 360 720 1080; dur: 4900; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="-0.8 4 1.3" animation__fall="property: position; from: -0.8 4 1.3; to: -0.8 -1.5 1.3; dur: 5300; easing: linear; loop: true; delay: 6000;" animation__spin="property: rotation; from: 0 0 0; to: 1080 360 720; dur: 5300; easing: linear; loop: true;"></a-plane>
-                <a-plane class="petal" material="src: #petal-texture; transparent: true; alphaTest: 0.5; side: double;" geometry="primitive: plane; width: 0.1; height: 0.1;" position="1.3 4 0.1" animation__fall="property: position; from: 1.3 4 0.1; to: 1.3 -1.5 0.1; dur: 4700; easing: linear; loop: true; delay: 6500;" animation__spin="property: rotation; from: 0 0 0; to: 360 360 1080; dur: 4700; easing: linear; loop: true;"></a-plane>
-                
-            </a-entity>
+            <a-text 
+                value="Wedding Day: 15th August 2026" 
+                position="3.5 0 0.5" 
+                rotation="-90 0 0" 
+                color="#FFFFFF" 
+                align="center" 
+                scale="0.8 0.8 0.8">
+            </a-text>
 
         </a-marker>
 
