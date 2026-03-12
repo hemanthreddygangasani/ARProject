@@ -17,7 +17,7 @@
                 });
                 
                 this.el.addEventListener('model-error', (error) => {
-                    log.innerHTML = "❌ Model Error: Ensure file is exactly named 'model.glb'";
+                    log.innerHTML = "❌ Model Error: Ensure the 3D file is in your GitHub folder!";
                     log.style.color = "red";
                 });
             }
@@ -27,22 +27,19 @@
         AFRAME.registerComponent('nav-button', {
             init: function () {
                 let el = this.el;
-                let isClicked = false; // Prevents double-firing on phones
+                let isClicked = false; 
 
                 let navigate = function (e) {
                     if (isClicked) return;
                     isClicked = true;
                     
-                    // Visual feedback: flash white so the user knows they tapped it
                     el.setAttribute('color', '#FFFFFF');
                     
-                    // Redirect to the map after a tiny delay
                     setTimeout(() => {
                         window.location.href = 'navigation.html';
                     }, 200);
                 };
 
-                // Listen to both PC clicks and Mobile screen taps
                 el.addEventListener('click', navigate);
                 el.addEventListener('touchstart', navigate, {passive: true});
             }
@@ -61,7 +58,7 @@
              raycaster="objects: .clickable">
         
         <a-assets>
-            <a-asset-item id="my-model" src="model.glb"></a-asset-item>
+            <a-asset-item id="my-model" src="the_groom_and_bride.glb"></a-asset-item>
             <img id="petal-texture" src="petals.png">
             <img id="board-texture" src="board.png">
         </a-assets>
@@ -73,7 +70,7 @@
             <a-entity
                 gltf-model="#my-model"
                 position="0 0 0"
-                scale="4.5 4.5 4.5" 
+                scale="1.2 1.2 1.2" 
                 rotation="-90 0 0"
                 model-debugger>
             </a-entity>
